@@ -1,0 +1,255 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f9f0f5; /* fundo rosa claro */
+  color: #333;
+}
+
+header {
+  background-color: #c2185b; /* rosa escuro */
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+nav .btn-nav {
+  background: white;
+  color: #c2185b;
+  border: 2px solid white;
+  padding: 8px 20px;
+  margin: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+}
+
+nav .btn-nav:hover {
+  background: #f8bbd0;
+  border-color: #f8bbd0;
+}
+
+main {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+h2 {
+  color: #c2185b;
+  margin-bottom: 15px;
+}
+
+h3 {
+  margin: 20px 0 10px;
+  color: #555;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+form input,
+form select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  flex: 1;
+  min-width: 180px;
+}
+
+form button[type="submit"] {
+  background-color: #c2185b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+form button[type="submit"]:hover {
+  background-color: #ad1457;
+}
+
+form button[type="button"] {
+  background-color: #aaa;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+th {
+  background-color: #c2185b;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+tr:hover {
+  background-color: #fce4ec;
+}
+
+/* Botões de ação dentro da tabela */
+.btn-novo {
+  display: inline-block;
+  background: #c2185b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-novo:hover {
+  background: #ad1457;
+}
+
+.btn-salvar {
+  background: #c2185b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-salvar:hover {
+  background: #ad1457;
+}
+
+.btn-cancelar {
+  display: inline-block;
+  background: #aaa;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-cancelar:hover {
+  background: #999;
+}
+
+.btn-editar {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 4px;
+  text-decoration: none;
+}
+
+.btn-editar:hover {
+  background: #1565c0;
+}
+
+.btn-apagar {
+  background: #d32f2f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.btn-apagar:hover {
+  background: #b71c1c;
+}
+
+.btn-realizado {
+  background: #388e3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.btn-realizado:hover {
+  background: #2e7d32;
+}
+
+.btn-confirmar {
+  background: #388e3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.btn-confirmar:hover {
+  background: #2e7d32;
+}
+
+.btn-cancelar-apagar {
+  background: #aaa;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancelar-apagar:hover {
+  background: #999;
+}
+
+/* Badge de status */
+.status-pendente {
+  background: #ff9800;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.status-realizado {
+  background: #4caf50;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
