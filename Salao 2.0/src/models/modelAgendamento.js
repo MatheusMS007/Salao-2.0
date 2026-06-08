@@ -16,11 +16,11 @@ const Agendamentos = sequelize.define('Agendamento', { // 'Agendamento' é o nom
         allowNull: false          // não pode ficar vazio
     },
     data: {
-        type: DataTypes.STRING,   // tipo texto para guardar a data
+        type: DataTypes.DATEONLY, // tipo data (apenas data, sem hora)
         allowNull: false          // não pode ficar vazio
     },
     hora: {
-        type: DataTypes.STRING,   // tipo texto para guardar a hora
+        type: DataTypes.TIME,     // tipo hora
         allowNull: false          // não pode ficar vazio
     },
     status: {

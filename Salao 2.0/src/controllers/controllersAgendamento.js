@@ -13,7 +13,7 @@ export const criarAgendamento = async (req, res) => {
         await bdConexao.execute(sql, [idCliente, servico, data, hora, 'pendente']) // status começa sempre como 'pendente'
         res.redirect('/agendamentos')                                               // redireciona para a lista de agendamentos
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }
 
@@ -28,7 +28,7 @@ export const listarAgendamentos = async (req, res) => {
         const [agendamentos] = await bdConexao.execute(sql) // executa e guarda o resultado
         res.render('agendamentos', { agendamentos })        // mostra a página com a lista
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }
 
@@ -42,7 +42,7 @@ export const atualizarAgendamento = async (req, res) => {
         await bdConexao.execute(sql, [idCliente, servico, data, hora, id]) // executa com os novos dados
         res.redirect('/agendamentos')                                       // volta para a lista
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }
 
@@ -55,7 +55,7 @@ export const marcarRealizado = async (req, res) => {
         await bdConexao.execute(sql, ['realizado', id]) // muda o status para 'realizado'
         res.redirect('/agendamentos')                   // volta para a lista
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }
 
@@ -68,7 +68,7 @@ export const removerAgendamento = async (req, res) => {
         await bdConexao.execute(sql, [id])
         res.redirect('/agendamentos')
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }
 
@@ -79,7 +79,7 @@ export const exibirCadastroAgendamento = async (req, res) => {
         const [clientes] = await bdConexao.execute(sql)
         res.render('cadastroAgendamento', { clientes })
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }
 
@@ -95,6 +95,6 @@ export const exibirEdicaoAgendamento = async (req, res) => {
         const agendamento = rows[0]                                             // pega o primeiro resultado
         res.render('editarAgendamento', { agendamento, clientes })              // abre a página já preenchida
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }

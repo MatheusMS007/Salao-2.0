@@ -1,22 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salão de Beleza - Agendamentos</title>
-    <link rel="stylesheet" href="/css/style.css"> <!-- importa o arquivo de estilos -->
-</head>
-<body>
+<%- include('header') %>
 
-    <header>
-        <h1>💇 Salão de Beleza</h1>
-        <nav>
-            <a href="/clientes" class="btn-nav">Clientes</a>
-            <a href="/agendamentos" class="btn-nav">Agendamentos</a>
-        </nav>
-    </header>
-
-    <main>
         <h2>Agendamentos</h2>
 
         <!-- Botão para abrir o formulário de novo agendamento -->
@@ -80,5 +63,4 @@
     });
   });
 </script>
-</body>
-</html>
+<%- include('footer') %>

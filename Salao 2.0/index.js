@@ -11,8 +11,6 @@ import routerAgendamento from './src/routers/routerAgendamento.js'
 
 dotenv.config() // lê o arquivo .env para pegar as configurações
 
-sincronizarBD() // cria as tabelas no banco de dados quando o sistema iniciar
-
 const app = express() // cria o servidor
 
 const PORT = process.env.PORT || 3000   // porta onde o sistema vai rodar (padrão 3000)
@@ -36,7 +34,12 @@ app.get('/', (req, res) => {
     res.redirect('/clientes') // redireciona para a lista de clientes
 })
 
-// inicia o servidor
-app.listen(PORT, HOST, () => {
-    console.log(`Servidor rodando em http://${HOST}:${PORT}`) // mostra no terminal que o servidor está funcionando
-})
+// inicia o sistema: espera o banco estar pronto antes de abrir o servidor
+const iniciar = async () => {
+    await sincronizarBD()  // espera o banco sincronizar
+    app.listen(PORT, HOST, () => {
+        console.log(`Servidor rodando em http://${HOST}:${PORT}`) // mostra no terminal que o servidor está funcionando
+    })
+}
+
+iniciar()

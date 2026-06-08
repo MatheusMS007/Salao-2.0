@@ -13,7 +13,7 @@ export const criarCliente = async (req, res) => {
         await bdConexao.execute(sql, [nome, telefone, email]) // executa o comando com os dados
         res.redirect('/clientes')                             // redireciona para a lista de clientes
     } catch (err) {
-        res.status(500).json({ erro: err.message }) // se der erro, mostra a mensagem
+        res.render('erro', { mensagem: err.message })
     }
 }
 
@@ -24,7 +24,7 @@ export const listarClientes = async (req, res) => {
         const [clientes] = await bdConexao.execute(sql) // executa e guarda o resultado
         res.render('clientes', { clientes })            // mostra a página com a lista de clientes
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }
 
@@ -38,7 +38,7 @@ export const atualizarCliente = async (req, res) => {
         await bdConexao.execute(sql, [nome, telefone, email, id]) // executa com os novos dados
         res.redirect('/clientes')                                  // volta para a lista
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }
 
@@ -46,12 +46,15 @@ export const atualizarCliente = async (req, res) => {
 export const removerCliente = async (req, res) => {
     const id = req.params.id // pega o id do cliente que está na URL
 
-    const sql = 'DELETE FROM clientes WHERE idCliente = ?' // comando para apagar
     try {
-        await bdConexao.execute(sql, [id]) // executa o comando
-        res.redirect('/clientes')          // volta para a lista
+        const [agendamentos] = await bdConexao.execute('SELECT * FROM agendamentos WHERE idCliente = ?', [id]) // verifica se o cliente tem agendamentos
+        if (agendamentos.length > 0) { // se tiver, bloqueia a exclusão
+            return res.status(400).json({ mensagem: 'Não é possível apagar um cliente com agendamentos cadastrados!' })
+        }
+        await bdConexao.execute('DELETE FROM clientes WHERE idCliente = ?', [id]) // apaga o cliente
+        res.redirect('/clientes') // volta para a lista
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }
 
@@ -70,7 +73,7 @@ export const exibirEdicaoCliente = async (req, res) => {
         const cliente = rows[0]                   // pega o primeiro resultado
         res.render('editarCliente', { cliente })  // abre a página já preenchida com os dados
     } catch (err) {
-        res.status(500).json({ erro: err.message })
+        res.render('erro', { mensagem: err.message })
     }
 }
 
