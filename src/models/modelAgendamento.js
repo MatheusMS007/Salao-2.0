@@ -27,6 +27,10 @@ const Agendamentos = sequelize.define('Agendamento', { // 'Agendamento' é o nom
         type: DataTypes.STRING,   // tipo texto
         allowNull: false,         // não pode ficar vazio
         defaultValue: 'pendente'  // quando criar um agendamento, o status começa como 'pendente'
+    },
+    idSalao: {
+        type: DataTypes.INTEGER,  // chave estrangeira que liga o agendamento ao salão
+        allowNull: false
     }
 },
 {

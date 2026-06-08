@@ -21,6 +21,10 @@ const Clientes = sequelize.define('Cliente', { // 'Cliente' é o nome do modelo
     email: {
         type: DataTypes.STRING,   // tipo texto
         allowNull: true           // pode ficar vazio, email é opcional
+    },
+    idSalao: {
+        type: DataTypes.INTEGER,  // chave estrangeira que liga o cliente ao salão
+        allowNull: false
     }
 },
 {
