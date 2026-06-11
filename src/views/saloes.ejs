@@ -1,0 +1,31 @@
+<%- include('header') %>
+
+<section class="lista">
+    <div class="topo-lista">
+        <h2>Salões cadastrados</h2>
+        <a href="/cadastroSalao" class="btn">Novo salão</a>
+    </div>
+
+    <% if (saloes.length === 0) { %>
+        <p>Nenhum salão cadastrado ainda.</p>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% saloes.forEach((salao) => { %>
+                    <tr>
+                        <td><%= salao.idSalao %></td>
+                        <td><%= salao.nome %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+</section>
+
+<%- include('footer') %>

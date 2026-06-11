@@ -26,6 +26,14 @@ const Usuarios = sequelize.define('Usuario', {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: 'dono' // perfil padrão é dono de salão
+    },
+    idSalao: {
+        type: DataTypes.INTEGER,
+        allowNull: true, // ADM não precisa ter salão; somente donos usam esse campo
+        references: {
+            model: 'saloes',
+            key: 'idSalao'
+        }
     }
 },
 {

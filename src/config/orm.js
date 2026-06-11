@@ -1,4 +1,7 @@
 import { Sequelize } from 'sequelize'
+import dotenv from 'dotenv'
+
+dotenv.config() // carrega o .env antes de qualquer coisa
 
 const sequelize = new Sequelize({  // cria a conexão com o banco de dados
     dialect: 'sqlite',
@@ -17,10 +20,15 @@ const conexaoBD = async () => {
 
 conexaoBD() // chama a função acima para testar a conexão quando o sistema iniciar
 
-// Função que cria as tabelas no banco de dados com base nos modelos que vamos criar depois
+// Função que cria as tabelas no banco de dados com base nos modelos
 export const sincronizarBD = async () => {
     try {
-        await sequelize.sync({ force: false }) // force: false significa que NÃO apaga os dados já salvos
+        // importa os models aqui para garantir que estão registrados antes de sincronizar
+        await import('../models/modelUsuario.js')
+        await import('../models/modelSalao.js')
+        await import('../models/modelCliente.js')
+        await import('../models/modelAgendamento.js')
+        await sequelize.sync({ alter: true }) // altera as tabelas para coincidir com os modelos sem apagar dados
         console.log('Tabelas sincronizadas com sucesso!')
     } catch (error) {
         console.error('Erro ao sincronizar tabelas:', error)

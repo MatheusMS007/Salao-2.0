@@ -1,4 +1,5 @@
-import bdConexao from '../config/database.js' // importa a conexão com o banco de dados
+import Clientes from '../models/modelCliente.js'
+import Agendamentos from '../models/modelAgendamento.js'
 
 // CADASTRAR um novo cliente
 export const criarCliente = async (req, res) => {
@@ -8,10 +9,9 @@ export const criarCliente = async (req, res) => {
         return res.status(400).json({ mensagem: 'Nome e telefone são obrigatórios!' })
     }
 
-    const sql = 'INSERT INTO clientes (nome, telefone, email) VALUES (?, ?, ?)' // comando para inserir no banco
     try {
-        await bdConexao.execute(sql, [nome, telefone, email]) // executa o comando com os dados
-        res.redirect('/clientes')                             // redireciona para a lista de clientes
+        await Clientes.create({ nome, telefone, email })
+        res.redirect('/clientes') // redireciona para a lista de clientes
     } catch (err) {
         res.render('erro', { mensagem: err.message })
     }
@@ -19,10 +19,9 @@ export const criarCliente = async (req, res) => {
 
 // LISTAR todos os clientes
 export const listarClientes = async (req, res) => {
-    const sql = 'SELECT * FROM clientes ORDER BY nome' // comando para buscar todos os clientes em ordem alfabética
     try {
-        const [clientes] = await bdConexao.execute(sql) // executa e guarda o resultado
-        res.render('clientes', { clientes })            // mostra a página com a lista de clientes
+        const clientes = await Clientes.findAll({ order: [['nome', 'ASC']] })
+        res.render('clientes', { clientes }) // mostra a página com a lista de clientes
     } catch (err) {
         res.render('erro', { mensagem: err.message })
     }
@@ -33,10 +32,12 @@ export const atualizarCliente = async (req, res) => {
     const { nome, telefone, email } = req.body // pega os novos dados do formulário
     const id = req.params.id                   // pega o id do cliente que está na URL
 
-    const sql = 'UPDATE clientes SET nome = ?, telefone = ?, email = ? WHERE idCliente = ?' // comando para atualizar
     try {
-        await bdConexao.execute(sql, [nome, telefone, email, id]) // executa com os novos dados
-        res.redirect('/clientes')                                  // volta para a lista
+        await Clientes.update(
+            { nome, telefone, email },
+            { where: { idCliente: id } }
+        )
+        res.redirect('/clientes') // volta para a lista
     } catch (err) {
         res.render('erro', { mensagem: err.message })
     }
@@ -47,11 +48,11 @@ export const removerCliente = async (req, res) => {
     const id = req.params.id // pega o id do cliente que está na URL
 
     try {
-        const [agendamentos] = await bdConexao.execute('SELECT * FROM agendamentos WHERE idCliente = ?', [id]) // verifica se o cliente tem agendamentos
-        if (agendamentos.length > 0) { // se tiver, bloqueia a exclusão
+        const agendamentos = await Agendamentos.count({ where: { idCliente: id } })
+        if (agendamentos > 0) { // se tiver, bloqueia a exclusão
             return res.status(400).json({ mensagem: 'Não é possível apagar um cliente com agendamentos cadastrados!' })
         }
-        await bdConexao.execute('DELETE FROM clientes WHERE idCliente = ?', [id]) // apaga o cliente
+        await Clientes.destroy({ where: { idCliente: id } }) // apaga o cliente
         res.redirect('/clientes') // volta para a lista
     } catch (err) {
         res.render('erro', { mensagem: err.message })
@@ -67,11 +68,9 @@ export const exibirCadastroCliente = (req, res) => {
 export const exibirEdicaoCliente = async (req, res) => {
     const id = req.params.id // pega o id do cliente que está na URL
 
-    const sql = 'SELECT * FROM clientes WHERE idCliente = ?' // busca o cliente pelo id
     try {
-        const [rows] = await bdConexao.execute(sql, [id])
-        const cliente = rows[0]                   // pega o primeiro resultado
-        res.render('editarCliente', { cliente })  // abre a página já preenchida com os dados
+        const cliente = await Clientes.findByPk(id)
+        res.render('editarCliente', { cliente }) // abre a página já preenchida com os dados
     } catch (err) {
         res.render('erro', { mensagem: err.message })
     }

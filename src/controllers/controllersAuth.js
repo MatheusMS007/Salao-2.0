@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs'
-import bdConexao from '../config/database.js'
+import Usuarios from '../models/modelUsuario.js'
 
 // EXIBIR a página de login
 export const exibirLogin = (req, res) => {
@@ -11,8 +11,7 @@ export const fazerLogin = async (req, res) => {
     const { email, senha } = req.body // pega email e senha do formulário
 
     try {
-        const [rows] = await bdConexao.execute('SELECT * FROM usuarios WHERE email = ?', [email])
-        const usuario = rows[0]
+        const usuario = await Usuarios.findOne({ where: { email } })
 
         if (!usuario) { // se não encontrou o usuário
             return res.redirect('/login?erro=1')
@@ -28,7 +27,7 @@ export const fazerLogin = async (req, res) => {
             id: usuario.idUsuario,
             nome: usuario.nome,
             perfil: usuario.perfil,
-            idSalao: usuario.idSalao || null
+            idSalao: usuario.idSalao || null // salva o salão do dono, se houver
         }
 
         res.redirect('/clientes') // redireciona para a página principal
@@ -46,16 +45,19 @@ export const fazerLogout = (req, res) => {
 // CRIAR o ADM master (usar apenas uma vez acessando /setup)
 export const criarAdm = async (req, res) => {
     try {
-        const [rows] = await bdConexao.execute("SELECT * FROM usuarios WHERE perfil = 'adm'")
-        if (rows.length > 0) { // se já existir um adm, bloqueia
+        const usuarioAdm = await Usuarios.findOne({ where: { perfil: 'adm' } })
+        if (usuarioAdm) { // se já existir um adm, bloqueia
             return res.send('ADM já existe!')
         }
 
         const hash = await bcrypt.hash('admin123', 10) // criptografa a senha padrão
-        await bdConexao.execute(
-            "INSERT INTO usuarios (nome, email, senha, perfil) VALUES (?, ?, ?, ?)",
-            ['ADM Master', 'adm@salao.com', hash, 'adm']
-        )
+        await Usuarios.create({
+            nome: 'ADM Master',
+            email: 'adm@salao.com',
+            senha: hash,
+            perfil: 'adm'
+        })
+
         res.send('ADM criado! Email: adm@salao.com | Senha: admin123 — Troque a senha após o primeiro login!')
     } catch (err) {
         res.render('erro', { mensagem: err.message })
