@@ -123,12 +123,17 @@ export const exibirCadastroCliente = (req, res) => {
 // MOSTRAR a página de edição de cliente (formulário já preenchido)
 export const exibirEdicaoCliente = async (req, res) => {
     const id = req.params.id // pega o id do cliente que está na URL
+    const idSalao = req.session.usuario.idSalao
 
     try {
-        const cliente = await Clientes.findByPk(id)
+        const cliente = await Clientes.findOne({ where: { idCliente: id, idSalao } })
+        
+        if (!cliente) {
+            return res.status(404).render('erro', { mensagem: 'Cliente não encontrado ou acesso negado!' })
+        }
+
         res.render('editarCliente', { cliente }) // abre a página já preenchida com os dados
     } catch (err) {
         res.render('erro', { mensagem: err.message })
     }
 }
-

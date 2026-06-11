@@ -159,8 +159,10 @@ export const removerAgendamento = async (req, res) => {
 
 // MOSTRAR a página de cadastro de agendamento (formulário em branco)
 export const exibirCadastroAgendamento = async (req, res) => {
+    const idSalao = req.session.usuario.idSalao
+
     try {
-        const clientes = await Clientes.findAll({ order: [['nome', 'ASC']] })
+        const clientes = await Clientes.findAll({ where: { idSalao }, order: [['nome', 'ASC']] })
         res.render('cadastroAgendamento', { clientes })
     } catch (err) {
         res.render('erro', { mensagem: err.message })
@@ -170,10 +172,16 @@ export const exibirCadastroAgendamento = async (req, res) => {
 // MOSTRAR a página de edição de agendamento (formulário já preenchido)
 export const exibirEdicaoAgendamento = async (req, res) => {
     const id = req.params.id
+    const idSalao = req.session.usuario.idSalao
 
     try {
-        const agendamento = await Agendamentos.findByPk(id)
-        const clientes = await Clientes.findAll({ order: [['nome', 'ASC']] })
+        const agendamento = await Agendamentos.findOne({ where: { idAgendamento: id, idSalao } })
+        
+        if (!agendamento) {
+            return res.status(404).render('erro', { mensagem: 'Agendamento não encontrado ou acesso negado!' })
+        }
+
+        const clientes = await Clientes.findAll({ where: { idSalao }, order: [['nome', 'ASC']] })
         res.render('editarAgendamento', { agendamento, clientes }) // abre a página já preenchida
     } catch (err) {
         res.render('erro', { mensagem: err.message })

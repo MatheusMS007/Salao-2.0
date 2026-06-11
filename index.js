@@ -1,7 +1,6 @@
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import morgan from 'morgan'
 import dotenv from 'dotenv'
 import methodOverride from 'method-override'
 import session from 'express-session'
@@ -23,7 +22,7 @@ const HOST = process.env.HOST || 'localhost' // endereço do servidor (padrão l
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))                         // lê o ?_method= nos formulários e converte para PUT ou DELETE
-app.use(morgan('common'))
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'salao-secret', // chave para assinar o cookie de sessão
     resave: false,
