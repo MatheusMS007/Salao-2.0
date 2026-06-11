@@ -1,0 +1,44 @@
+<%- include('header') %>
+
+<section class="lista">
+    <div class="topo-lista">
+        <h2>Donos de Salão</h2>
+        <a href="/cadastroDono" class="btn">Novo Dono</a>
+    </div>
+
+    <% if (donos.length === 0) { %>
+        <p>Nenhum dono cadastrado ainda.</p>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Salão</th>
+                    <!-- COLUNA DE AÇÕES: Permite deletar donos -->
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% donos.forEach((dono) => { %>
+                    <tr>
+                        <td><%= dono.idUsuario %></td>
+                        <td><%= dono.nome %></td>
+                        <td><%= dono.email %></td>
+                        <td><%= dono.idSalao %></td>
+                        <!-- FORMULÁRIO DE DELETE: Envia requisição DELETE para /donos/:id -->
+                        <!-- JavaScript: form.method muda para DELETE (não existe nativamente em HTML) -->
+                        <td>
+                            <form method="POST" action="/donos/<%= dono.idUsuario %>?_method=DELETE" style="display: inline;">
+                                <button type="submit" class="btn-deletar" onclick="return confirm('Tem certeza que deseja deletar este dono?');">Deletar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+</section>
+
+<%- include('footer') %>

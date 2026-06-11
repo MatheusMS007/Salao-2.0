@@ -3,7 +3,6 @@
 <section class="lista">
     <div class="topo-lista">
         <h2>Salões cadastrados</h2>
-        <a href="/cadastroSalao" class="btn">Novo salão</a>
     </div>
 
     <% if (saloes.length === 0) { %>
@@ -14,6 +13,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
+                    <!-- COLUNA DE AÇÕES: Permite deletar salões -->
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +22,13 @@
                     <tr>
                         <td><%= salao.idSalao %></td>
                         <td><%= salao.nome %></td>
+                        <!-- FORMULÁRIO DE DELETE: Envia requisição DELETE para /saloes/:id -->
+                        <!-- JavaScript: form.method muda para DELETE (não existe nativamente em HTML) -->
+                        <td>
+                            <form method="POST" action="/saloes/<%= salao.idSalao %>?_method=DELETE" style="display: inline;">
+                                <button type="submit" class="btn-deletar" onclick="return confirm('Tem certeza que deseja deletar este salão?');">Deletar</button>
+                            </form>
+                        </td>
                     </tr>
                 <% }) %>
             </tbody>

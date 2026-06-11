@@ -11,10 +11,25 @@
     <header>
         <h1>💇 Salão de Beleza</h1>
         <nav>
+            <!-- LINK comum: "Clientes" está disponível para todos (ADM e donos) -->
             <a href="/clientes" class="btn-nav">Clientes</a>
-            <a href="/agendamentos" class="btn-nav">Agendamentos</a>
-            <a href="/saloes" class="btn-nav">Salões</a>
-            <a href="/cadastroSalao" class="btn-nav">Novo Salão</a>
+            
+            <!-- BLOCO CONDICIONAL: exibe "Agendamentos" apenas para donos de salão -->
+            <!-- ADM Master (perfil 'adm') não verá o link de agendamentos -->
+            <!-- usuario.perfil !== 'adm' significa: se o perfil NÃO for 'adm', exibe o link -->
+            <% if (usuario && usuario.perfil !== 'adm') { %>
+                <a href="/agendamentos" class="btn-nav">Agendamentos</a>
+            <% } %>
+            
+            <!-- BLOCO CONDICIONAL: exibe links de gerenciamento apenas para ADM -->
+            <!-- Donos de salão (perfil 'dono') não veem essas opções -->
+            <!-- usuario.perfil === 'adm' significa: se o perfil FOR 'adm', exibe estes links -->
+            <% if (usuario && usuario.perfil === 'adm') { %>
+                <a href="/saloes" class="btn-nav">Salões</a>
+                <a href="/cadastroSalao" class="btn-nav">Novo Salão</a>
+                <a href="/cadastroDono" class="btn-nav">Novo Dono</a>
+                <a href="/donos" class="btn-nav">Donos</a>
+            <% } %>
         </nav>
     </header>
 

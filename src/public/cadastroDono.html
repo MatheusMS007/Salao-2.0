@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Dono</title>
+    <link rel="stylesheet" href="/css/cadastroDono.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Cadastrar Dono de Salão</h1>
+        <form id="form-dono" action="/donos" method="POST" class="form-cadastro">
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" type="text" required>
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required>
+
+            <label for="senha">Senha</label>
+            <input id="senha" name="senha" type="password" required>
+
+            <label for="idSalao">Salão</label>
+            <select id="idSalao" name="idSalao" required>
+                <option value="">Carregando salões...</option>
+            </select>
+
+            <button type="submit">Criar Dono</button>
+        </form>
+        <a class="link-voltar" href="/donos">Voltar para donos</a>
+    </main>
+
+    <script>
+        // Busca os salões via API e popula o select
+        fetch('/api/saloes')
+            .then(r => r.json())
+            .then(data => {
+                const select = document.getElementById('idSalao')
+                select.innerHTML = ''
+                data.forEach(s => {
+                    const opt = document.createElement('option')
+                    opt.value = s.idSalao
+                    opt.textContent = s.nome
+                    select.appendChild(opt)
+                })
+            }).catch(err => {
+                const select = document.getElementById('idSalao')
+                select.innerHTML = '<option value="">Erro ao carregar salões</option>'
+            })
+    </script>
+</body>
+</html>
