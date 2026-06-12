@@ -11,13 +11,23 @@ import routerAuth from './src/routers/routerAuth.js'
 import routerSalao from './src/routers/routerSalao.js'
 import routerDono from './src/routers/routerDono.js'
 
+
+//import dotenv from 'dotenv'
+
+//dotenv.config() 
+
 dotenv.config() // lê o arquivo .env para pegar as configurações
 
 const app = express() // cria o servidor
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const PORT = process.env.PORT || 3000   // porta onde o sistema vai rodar (padrão 3000)
-const HOST = process.env.HOST || 'localhost' // endereço do servidor (padrão localhost)
+let PORT = process.env.EXPRESS_PORT   // porta onde o sistema vai rodar (padrão 3000)
+let HOST = process.env.EXPRESS_HOST  // endereço do servidor (padrão localhost)
+
+if(process.env.MODE_NODE === 'dev'){
+    PORT = 3000
+    HOST = 'localhost'
+}
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
