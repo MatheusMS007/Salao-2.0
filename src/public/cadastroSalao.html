@@ -12,6 +12,16 @@
         <form action="/saloes" method="POST" class="form-cadastro">
             <label for="nome">Nome do salão</label>
             <input id="nome" name="nome" type="text" placeholder="Ex: Salão da Maria" required>
+
+            <label for="telefone">Telefone</label>
+            <input id="telefone" name="telefone" type="text" placeholder="Ex: (11) 99999-9999">
+
+            <label for="endereco">Endereço</label>
+            <input id="endereco" name="endereco" type="text" placeholder="Ex: Rua das Flores, 123">
+
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" placeholder="Ex: Salão especializado em tranças e penteados afro" rows="4"></textarea>
+
             <button type="submit">Salvar salão</button>
         </form>
         <a class="link-voltar" href="/saloes">Voltar para salões</a>

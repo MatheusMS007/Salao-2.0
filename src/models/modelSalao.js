@@ -14,6 +14,21 @@ const Saloes = sequelize.define('Salao', {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
+    },
+    telefone: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            is: /^[\d\s\(\)\-\+]+$/
+        }
+    },
+    endereco: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    descricao: {
+        type: DataTypes.TEXT,
+        allowNull: true
     }
 },
 {

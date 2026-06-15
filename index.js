@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import methodOverride from 'method-override'
 import session from 'express-session'
 import { sincronizarBD } from './src/config/orm.js'
+import routerVitrine from './src/routers/routerVitrine.js'
 import routerCliente from './src/routers/routerCliente.js'
 import routerAgendamento from './src/routers/routerAgendamento.js'
 import routerAuth from './src/routers/routerAuth.js'
@@ -56,6 +57,7 @@ app.get('/', (req, res) => {
 app.use(routerAuth)         // liga as rotas de autenticação ao servidor
 app.use(routerSalao)         // liga as rotas de salões ao servidor
 app.use(routerDono)         // liga as rotas de donos ao servidor
+app.use(routerVitrine)      // liga as rotas da vitrine pública ao servidor
 app.use(routerCliente)      // liga as rotas de clientes ao servidor
 app.use(routerAgendamento)  // liga as rotas de agendamentos ao servidor
 

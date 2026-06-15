@@ -1,0 +1,67 @@
+<%- include('header') %>
+
+<section class="salao-pagina">
+
+    <div class="salao-info">
+        <h2><%= salao.nome %></h2>
+        <% if (salao.endereco) { %>
+            <p>📍 <%= salao.endereco %></p>
+        <% } %>
+        <% if (salao.telefone) { %>
+            <p>📞 <%= salao.telefone %></p>
+        <% } %>
+        <% if (salao.descricao) { %>
+            <p class="salao-descricao"><%= salao.descricao %></p>
+        <% } %>
+
+        <h3>Serviços disponíveis</h3>
+        <ul class="lista-servicos">
+            <li>✂️ Escova</li>
+            <li>💆 Tranças</li>
+            <li>💅 Manicure</li>
+        </ul>
+    </div>
+
+    <div class="salao-formulario">
+        <h3>Solicitar Agendamento</h3>
+
+        <% if (sucesso === '1') { %>
+            <p class="mensagem-sucesso">Solicitação enviada com sucesso! Aguarde o contato do salão.</p>
+        <% } %>
+
+        <form action="/vitrine/<%= salao.idSalao %>/solicitacao" method="POST" class="formulario">
+
+            <label>Nome completo</label>
+            <input type="text" name="nome" placeholder="Ex: Maria Silva" required>
+
+            <label>Telefone</label>
+            <input type="text" name="telefone" placeholder="Ex: (11) 99999-9999" required>
+
+            <label>Email (opcional)</label>
+            <input type="email" name="email" placeholder="Ex: maria@email.com">
+
+            <label>Serviço</label>
+            <select name="servico" required>
+                <option value="">Selecione o serviço</option>
+                <option value="Escova">Escova</option>
+                <option value="Tranças">Tranças</option>
+                <option value="Manicure">Manicure</option>
+            </select>
+
+            <label>Data preferida</label>
+            <input type="date" name="data" required>
+
+            <label>Hora preferida</label>
+            <input type="time" name="hora" required>
+
+            <div class="botoes">
+                <button type="submit" class="btn-salvar">Enviar solicitação</button>
+                <a href="/vitrine" class="btn-cancelar">Voltar</a>
+            </div>
+
+        </form>
+    </div>
+
+</section>
+
+<%- include('footer') %>

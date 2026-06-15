@@ -45,6 +45,7 @@ export const sincronizarBD = async () => {
         await import('../models/modelSalao.js')
         await import('../models/modelCliente.js')
         await import('../models/modelAgendamento.js')
+        await import('../models/modelSolicitacao.js')
         await sequelize.sync({ force: false }) // altera as tabelas para coincidir com os modelos sem apagar dados ***
         console.log('Tabelas sincronizadas com sucesso!')
     } catch (error) {

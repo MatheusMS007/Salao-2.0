@@ -34,11 +34,16 @@ label {
     font-weight: 600;
 }
 
-input {
+input, textarea {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+textarea {
+    resize: vertical;
 }
 
 button {

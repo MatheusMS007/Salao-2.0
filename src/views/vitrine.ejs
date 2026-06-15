@@ -1,0 +1,33 @@
+<%- include('header') %>
+
+<section class="lista">
+    <div class="topo-lista">
+        <h2>Nossos Salões</h2>
+    </div>
+
+    <% if (saloes.length === 0) { %>
+        <p>Nenhum salão cadastrado ainda.</p>
+    <% } else { %>
+        <div class="vitrine-cards">
+            <% saloes.forEach(salao => { %>
+                <div class="card-salao">
+                    <div class="card-info">
+                        <h3><%= salao.nome %></h3>
+                        <% if (salao.endereco) { %>
+                            <p>📍 <%= salao.endereco %></p>
+                        <% } %>
+                        <% if (salao.telefone) { %>
+                            <p>📞 <%= salao.telefone %></p>
+                        <% } %>
+                        <% if (salao.descricao) { %>
+                            <p class="card-descricao"><%= salao.descricao %></p>
+                        <% } %>
+                    </div>
+                    <a href="/vitrine/<%= salao.idSalao %>" class="btn-novo">Ver mais</a>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</section>
+
+<%- include('footer') %>

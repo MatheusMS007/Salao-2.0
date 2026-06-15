@@ -15,14 +15,14 @@ export const listarSaloes = async (req, res) => {
 
 // CRIAR um novo salão no cadastro do ADM Master
 export const criarSalao = async (req, res) => {
-    const { nome } = req.body
+    const { nome, telefone, endereco, descricao } = req.body
 
     if (!nome) {
         return res.status(400).render('erro', { mensagem: 'O nome do salão é obrigatório!' })
     }
 
     try {
-        await Saloes.create({ nome })
+        await Saloes.create({ nome, telefone, endereco, descricao })
         res.redirect('/saloes')
     } catch (err) {
         res.render('erro', { mensagem: err.message })
