@@ -30,7 +30,11 @@ export const fazerLogin = async (req, res) => {
             idSalao: usuario.idSalao || null // salva o salão do dono, se houver
         }
 
-        res.redirect('/clientes') // redireciona para a página principal
+        if (usuario.perfil === 'adm') {
+            res.redirect('/saloes')
+        } else {
+            res.redirect('/clientes')
+        }
     } catch (err) {
         res.render('erro', { mensagem: err.message })
     }
@@ -38,8 +42,9 @@ export const fazerLogin = async (req, res) => {
 
 // FAZER logout
 export const fazerLogout = (req, res) => {
-    req.session.destroy() // destroi a sessão (remove o "crachá")
-    res.redirect('/login')
+    req.session.destroy(() => {
+        res.redirect('/login')
+    })
 }
 
 // CRIAR o ADM master (usar apenas uma vez acessando /setup)

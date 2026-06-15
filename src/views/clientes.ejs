@@ -1,11 +1,14 @@
 <%- include('header') %>
 
+<section class="lista">
+    <div class="topo-lista">
         <h2>Clientes Cadastrados</h2>
-
-        <!-- Botão para abrir o formulário de cadastro -->
         <a href="/cadastroCliente" class="btn-novo">+ Novo Cliente</a>
+    </div>
 
-        <!-- Tabela que mostra todos os clientes -->
+    <% if (clientes.length === 0) { %>
+        <p>Nenhum cliente cadastrado ainda.</p>
+    <% } else { %>
         <table>
             <thead>
                 <tr>
@@ -16,17 +19,13 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- o forEach percorre cada cliente e cria uma linha na tabela -->
                 <% clientes.forEach(cliente => { %>
                 <tr>
-                    <td><%= cliente.nome %></td>           <!-- mostra o nome do cliente -->
-                    <td><%= cliente.telefone %></td>       <!-- mostra o telefone -->
-                    <td><%= cliente.email || '-' %></td>   <!-- mostra o email ou '-' se estiver vazio -->
+                    <td><%= cliente.nome %></td>
+                    <td><%= cliente.telefone %></td>
+                    <td><%= cliente.email || '-' %></td>
                     <td>
-                        <!-- botão para editar o cliente -->
                         <a href="/editarCliente/<%= cliente.idCliente %>" class="btn-editar">Editar</a>
-
-                        <!-- formulário para apagar o cliente -->
                         <form action="/clientes/<%= cliente.idCliente %>?_method=DELETE" method="POST" style="display:inline">
                             <button type="submit" class="btn-apagar" data-id="<%= cliente.idCliente %>">Apagar</button>
                         </form>
@@ -35,7 +34,8 @@
                 <% }) %>
             </tbody>
         </table>
-    </main>
+    <% } %>
+</section>
 
 <script>
   // Escuta o clique em todos os botões de apagar

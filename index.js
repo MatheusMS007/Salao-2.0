@@ -12,10 +12,6 @@ import routerSalao from './src/routers/routerSalao.js'
 import routerDono from './src/routers/routerDono.js'
 
 
-//import dotenv from 'dotenv'
-
-//dotenv.config() 
-
 dotenv.config() // lê o arquivo .env para pegar as configurações
 
 const app = express() // cria o servidor
@@ -52,15 +48,20 @@ app.use((req, res, next) => {
     next()
 })
 
+// rota principal - redireciona para o login
+app.get('/', (req, res) => {
+    res.redirect('/login')
+})
+
 app.use(routerAuth)         // liga as rotas de autenticação ao servidor
 app.use(routerSalao)         // liga as rotas de salões ao servidor
 app.use(routerDono)         // liga as rotas de donos ao servidor
 app.use(routerCliente)      // liga as rotas de clientes ao servidor
 app.use(routerAgendamento)  // liga as rotas de agendamentos ao servidor
 
-// rota principal - redireciona para o login
-app.get('/', (req, res) => {
-    res.redirect('/login')
+// rede de segurança para erros não tratados
+app.use((err, req, res, next) => {
+    res.status(500).render('erro', { mensagem: 'Deu bronca, contate o suporte' })
 })
 
 // inicia o sistema: espera o banco estar pronto antes de abrir o servidor

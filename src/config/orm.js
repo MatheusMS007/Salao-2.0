@@ -16,7 +16,7 @@ if(process.env.MODE_NODE === 'dev') {
     sequelize = new Sequelize(
         process.env.DATABASE_URL,
         {
-            dialect: 'postgresql',
+            dialect: 'postgres',
             dialectOptions: { 
                 ssl: { require: true, rejectUnauthorized: false } // true se estiver em produção, false para desenvolvimento local
             },

@@ -24,9 +24,9 @@ const Agendamentos = sequelize.define('Agendamento', { // 'Agendamento' é o nom
         allowNull: false          // não pode ficar vazio
     },
     status: {
-        type: DataTypes.STRING,   // tipo texto
-        allowNull: false,         // não pode ficar vazio
-        defaultValue: 'pendente'  // quando criar um agendamento, o status começa como 'pendente'
+        type: DataTypes.ENUM('pendente', 'realizado'),
+        allowNull: false,
+        defaultValue: 'pendente'
     },
     idSalao: {
         type: DataTypes.INTEGER,  // chave estrangeira que liga o agendamento ao salão
@@ -35,8 +35,7 @@ const Agendamentos = sequelize.define('Agendamento', { // 'Agendamento' é o nom
 },
 {
     tableName: 'agendamentos', // nome da tabela no banco de dados
-    timestamps: false,         // não cria colunas de data automáticas
-    charset: 'utf8'            // aceita acentos 
+    timestamps: false
 })
 
 // Liga a tabela de agendamentos com a tabela de clientes

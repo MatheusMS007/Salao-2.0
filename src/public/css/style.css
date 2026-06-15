@@ -5,6 +5,12 @@
   font-family: Arial, sans-serif;
 }
 
+.form-logout {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #f9f0f5; /* fundo rosa claro */
   color: #333;
@@ -63,6 +69,21 @@ form {
   margin-bottom: 20px;
 }
 
+.botoes {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+form label {
+  width: 100%;
+  font-weight: bold;
+  color: #c2185b;
+  font-size: 14px;
+}
+
 form input,
 form select {
   padding: 10px;
@@ -72,7 +93,7 @@ form select {
   min-width: 180px;
 }
 
-form button[type="submit"] {
+form button[type="submit"]:not(.btn-apagar):not(.btn-realizado) {
   background-color: #c2185b;
   color: white;
   border: none;
@@ -82,7 +103,7 @@ form button[type="submit"] {
   font-weight: bold;
 }
 
-form button[type="submit"]:hover {
+form button[type="submit"]:not(.btn-apagar):not(.btn-realizado):hover {
   background-color: #ad1457;
 }
 

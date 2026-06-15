@@ -12,7 +12,8 @@ const Saloes = sequelize.define('Salao', {
     },
     nome: {
         type: DataTypes.STRING,
-        allowNull: false // nome do salão
+        allowNull: false,
+        unique: true
     }
 },
 {
@@ -21,8 +22,7 @@ const Saloes = sequelize.define('Salao', {
     charset: 'utf8'
 })
 
-// um usuário dono tem um salão
-Usuarios.hasOne(Saloes, { foreignKey: 'idUsuario' })
-Saloes.belongsTo(Usuarios, { foreignKey: 'idUsuario' })
+Saloes.hasMany(Usuarios, { foreignKey: 'idSalao' })
+Usuarios.belongsTo(Saloes, { foreignKey: 'idSalao' })
 
 export default Saloes

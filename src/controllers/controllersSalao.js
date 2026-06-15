@@ -1,4 +1,7 @@
 import Saloes from '../models/modelSalao.js'
+import Usuarios from '../models/modelUsuario.js'
+import Clientes from '../models/modelCliente.js'
+import Agendamentos from '../models/modelAgendamento.js'
 
 // LISTAR todos os salões do sistema
 export const listarSaloes = async (req, res) => {
@@ -51,9 +54,25 @@ export const deletarSalao = async (req, res) => {
             return res.status(404).render('erro', { mensagem: 'Salão não encontrado!' })
         }
 
+        // Verifica se existem donos vinculados ao salão
+        const donos = await Usuarios.count({ where: { idSalao: id } })
+        if (donos > 0) {
+            return res.status(400).render('erro', { mensagem: 'Não é possível apagar um salão com donos cadastrados!' })
+        }
+
+        // Verifica se existem clientes vinculados ao salão
+        const clientes = await Clientes.count({ where: { idSalao: id } })
+        if (clientes > 0) {
+            return res.status(400).render('erro', { mensagem: 'Não é possível apagar um salão com clientes cadastrados!' })
+        }
+
+        // Verifica se existem agendamentos vinculados ao salão
+        const agendamentos = await Agendamentos.count({ where: { idSalao: id } })
+        if (agendamentos > 0) {
+            return res.status(400).render('erro', { mensagem: 'Não é possível apagar um salão com agendamentos cadastrados!' })
+        }
+
         // Deleta o salão do banco de dados
-        // Nota: se houver relacionamentos configurados (donos, clientes, agendamentos),
-        // eles serão afetados pelas regras de foreign key (ON DELETE SET NULL, etc)
         await Saloes.destroy({ where: { idSalao: id } })
 
         // Redireciona para a lista de salões

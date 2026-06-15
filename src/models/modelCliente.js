@@ -29,8 +29,7 @@ const Clientes = sequelize.define('Cliente', { // 'Cliente' é o nome do modelo
 },
 {
     tableName: 'clientes', // nome da tabela no banco de dados
-    timestamps: false,     // não cria colunas de data de criação/atualização automaticamente
-    charset: 'utf8'        // aceita acentos e caracteres especiais
+    timestamps: false
 })
 
 export default Clientes 

@@ -38,8 +38,7 @@ const Usuarios = sequelize.define('Usuario', {
 },
 {
     tableName: 'usuarios',
-    timestamps: false,
-    charset: 'utf8'
+    timestamps: false
 })
 
 export default Usuarios
