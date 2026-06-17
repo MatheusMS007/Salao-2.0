@@ -3,7 +3,9 @@
 <section class="lista">
     <div class="topo-lista">
         <h2>Clientes Cadastrados</h2>
-        <a href="/cadastroCliente" class="btn-novo">+ Novo Cliente</a>
+        <% if (usuario && usuario.perfil !== 'adm') { %>
+            <a href="/cadastroCliente" class="btn-novo">+ Novo Cliente</a>
+        <% } %>
     </div>
 
     <% if (clientes.length === 0) { %>
@@ -25,10 +27,12 @@
                     <td><%= cliente.telefone %></td>
                     <td><%= cliente.email || '-' %></td>
                     <td>
-                        <a href="/editarCliente/<%= cliente.idCliente %>" class="btn-editar">Editar</a>
-                        <form action="/clientes/<%= cliente.idCliente %>?_method=DELETE" method="POST" style="display:inline">
-                            <button type="submit" class="btn-apagar" data-id="<%= cliente.idCliente %>">Apagar</button>
-                        </form>
+                        <% if (usuario && usuario.perfil !== 'adm') { %>
+                            <a href="/editarCliente/<%= cliente.idCliente %>" class="btn-editar">Editar</a>
+                            <form action="/clientes/<%= cliente.idCliente %>?_method=DELETE" method="POST" style="display:inline">
+                                <button type="submit" class="btn-apagar" data-id="<%= cliente.idCliente %>">Apagar</button>
+                            </form>
+                        <% } %>
                     </td>
                 </tr>
                 <% }) %>

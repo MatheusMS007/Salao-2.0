@@ -1,0 +1,55 @@
+<%- include('header') %>
+
+<section class="lista">
+    <div class="topo-lista">
+        <h2>Solicitações de Agendamento</h2>
+    </div>
+
+    <% if (solicitacoes.length === 0) { %>
+        <p>Nenhuma solicitação recebida ainda.</p>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Serviço</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% solicitacoes.forEach(solicitacao => { %>
+                <tr>
+                    <td><%= solicitacao.nome %></td>
+                    <td><%= solicitacao.telefone %></td>
+                    <td><%= solicitacao.email || '-' %></td>
+                    <td><%= solicitacao.servico %></td>
+                    <td><%= solicitacao.data %></td>
+                    <td><%= solicitacao.hora %></td>
+                    <td>
+                        <span class="status-<%= solicitacao.status %>">
+                            <%= solicitacao.status %>
+                        </span>
+                    </td>
+                    <td>
+                        <% if (solicitacao.status === 'pendente') { %>
+                            <form action="/solicitacoes/<%= solicitacao.idSolicitacao %>/confirmar?_method=PATCH" method="POST" style="display:inline">
+                                <button type="submit" class="btn-realizado">✔ Confirmar</button>
+                            </form>
+                            <form action="/solicitacoes/<%= solicitacao.idSolicitacao %>/recusar?_method=PATCH" method="POST" style="display:inline">
+                                <button type="submit" class="btn-apagar">✖ Recusar</button>
+                            </form>
+                        <% } %>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+</section>
+
+<%- include('footer') %>

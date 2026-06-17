@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import methodOverride from 'method-override'
 import session from 'express-session'
 import { sincronizarBD } from './src/config/orm.js'
+import routerSolicitacao from './src/routers/routerSolicitacao.js'
 import routerVitrine from './src/routers/routerVitrine.js'
 import routerCliente from './src/routers/routerCliente.js'
 import routerAgendamento from './src/routers/routerAgendamento.js'
@@ -36,16 +37,11 @@ app.use(session({
     saveUninitialized: false
 }))
 
-app.use(express.static(path.join(__dirname, 'src', 'public'))) // diz onde ficam os arquivos HTML, CSS e JS
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'src', 'views'))
 
-app.set('view engine', 'ejs')                                          // configura o EJS como motor de templates
-app.set('views', path.join(__dirname, 'src', 'views'))      // diz onde ficam as páginas EJS
-
-// MIDDLEWARE GLOBAL para passar os dados da sessão para as views EJS
-// Isso permite que header.ejs e outras páginas acessem o usuário logado
-// res.locals é um objeto que fica disponível em todas as views renderizadas
 app.use((req, res, next) => {
-    res.locals.usuario = req.session.usuario // passa req.session.usuario para toda view renderizada
+    res.locals.usuario = req.session.usuario
     next()
 })
 
@@ -57,9 +53,12 @@ app.get('/', (req, res) => {
 app.use(routerAuth)         // liga as rotas de autenticação ao servidor
 app.use(routerSalao)         // liga as rotas de salões ao servidor
 app.use(routerDono)         // liga as rotas de donos ao servidor
+app.use(routerSolicitacao)  // liga as rotas de solicitações ao servidor
 app.use(routerVitrine)      // liga as rotas da vitrine pública ao servidor
 app.use(routerCliente)      // liga as rotas de clientes ao servidor
 app.use(routerAgendamento)  // liga as rotas de agendamentos ao servidor
+
+app.use(express.static(path.join(__dirname, 'src', 'public'))) // diz onde ficam os arquivos HTML, CSS e JS
 
 // rede de segurança para erros não tratados
 app.use((err, req, res, next) => {
