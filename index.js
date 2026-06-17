@@ -37,6 +37,8 @@ app.use(session({
     saveUninitialized: false
 }))
 
+app.use(express.static(path.join(__dirname, 'src', 'public')))
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'src', 'views'))
 
@@ -50,15 +52,13 @@ app.get('/', (req, res) => {
     res.redirect('/login')
 })
 
-app.use(routerAuth)         // liga as rotas de autenticação ao servidor
-app.use(routerSalao)         // liga as rotas de salões ao servidor
-app.use(routerDono)         // liga as rotas de donos ao servidor
-app.use(routerSolicitacao)  // liga as rotas de solicitações ao servidor
-app.use(routerVitrine)      // liga as rotas da vitrine pública ao servidor
-app.use(routerCliente)      // liga as rotas de clientes ao servidor
-app.use(routerAgendamento)  // liga as rotas de agendamentos ao servidor
-
-app.use(express.static(path.join(__dirname, 'src', 'public'))) // diz onde ficam os arquivos HTML, CSS e JS
+app.use(routerAuth)
+app.use(routerSalao)
+app.use(routerDono)
+app.use(routerSolicitacao)
+app.use(routerVitrine)
+app.use(routerCliente)
+app.use(routerAgendamento) // diz onde ficam os arquivos HTML, CSS e JS
 
 // rede de segurança para erros não tratados
 app.use((err, req, res, next) => {

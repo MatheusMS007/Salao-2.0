@@ -31,7 +31,11 @@ export const exibirSalao = async (req, res) => {
 // CRIAR uma solicitação de agendamento
 export const criarSolicitacao = async (req, res) => {
     const { nome, telefone, email, servico, data, hora } = req.body
-    const idSalao = req.params.id
+    const idSalao = parseInt(req.params.id)
+
+    if (isNaN(idSalao)) {
+        return res.status(400).render('erro', { mensagem: 'ID do salão inválido!' })
+    }
 
     if (!nome || !telefone || !servico || !data || !hora) {
         return res.status(400).render('erro', { mensagem: 'Todos os campos obrigatórios devem ser preenchidos!' })

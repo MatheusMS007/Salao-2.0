@@ -55,15 +55,15 @@ export const criarAdm = async (req, res) => {
             return res.send('ADM já existe!')
         }
 
-        const hash = await bcrypt.hash('admin123', 10) // criptografa a senha padrão
+        const hash = await bcrypt.hash(process.env.ADM_SENHA, 10)
         await Usuarios.create({
             nome: 'ADM Master',
-            email: 'adm@salao.com',
+            email: process.env.ADM_EMAIL,
             senha: hash,
             perfil: 'adm'
         })
 
-        res.send('ADM criado! Email: adm@salao.com | Senha: admin123 — Troque a senha após o primeiro login!')
+        res.send(`ADM criado! Email: ${process.env.ADM_EMAIL} | Senha: ${process.env.ADM_SENHA} — Troque a senha após o primeiro login!`)
     } catch (err) {
         res.render('erro', { mensagem: err.message })
     }

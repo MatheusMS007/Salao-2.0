@@ -18,7 +18,7 @@ if(process.env.MODE_NODE === 'dev') {
         {
             dialect: 'postgres',
             dialectOptions: { 
-                ssl: { require: true, rejectUnauthorized: false } // true se estiver em produção, false para desenvolvimento local
+                ssl: { require: true, rejectUnauthorized: true }
             },
             logging: false
         }
