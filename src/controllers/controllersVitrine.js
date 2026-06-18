@@ -1,7 +1,6 @@
 import Saloes from '../models/modelSalao.js'
 import Solicitacoes from '../models/modelSolicitacao.js'
 
-// EXIBIR a vitrine com todos os salões
 export const exibirVitrine = async (req, res) => {
     try {
         const saloes = await Saloes.findAll({ order: [['nome', 'ASC']] })
@@ -11,7 +10,6 @@ export const exibirVitrine = async (req, res) => {
     }
 }
 
-// EXIBIR a página de um salão específico com formulário de solicitação
 export const exibirSalao = async (req, res) => {
     const { id } = req.params
 
@@ -28,7 +26,6 @@ export const exibirSalao = async (req, res) => {
     }
 }
 
-// CRIAR uma solicitação de agendamento
 export const criarSolicitacao = async (req, res) => {
     const { nome, telefone, email, servico, data, hora } = req.body
     const idSalao = parseInt(req.params.id)

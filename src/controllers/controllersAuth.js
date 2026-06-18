@@ -1,33 +1,30 @@
 import bcrypt from 'bcryptjs'
 import Usuarios from '../models/modelUsuario.js'
 
-// EXIBIR a página de login
 export const exibirLogin = (req, res) => {
-    res.sendFile('login.html', { root: './src/public' }) // serve o arquivo HTML estático
+    res.sendFile('login.html', { root: './src/public' })
 }
 
-// FAZER login
 export const fazerLogin = async (req, res) => {
-    const { email, senha } = req.body // pega email e senha do formulário
+    const { email, senha } = req.body
 
     try {
         const usuario = await Usuarios.findOne({ where: { email } })
 
-        if (!usuario) { // se não encontrou o usuário
+        if (!usuario) {
             return res.redirect('/login?erro=1')
         }
 
-        const senhaCorreta = await bcrypt.compare(senha, usuario.senha) // compara a senha com o hash
-        if (!senhaCorreta) { // se a senha estiver errada
+        const senhaCorreta = await bcrypt.compare(senha, usuario.senha)
+        if (!senhaCorreta) {
             return res.redirect('/login?erro=1')
         }
 
-        // salva os dados do usuário na sessão (o "crachá")
         req.session.usuario = {
             id: usuario.idUsuario,
             nome: usuario.nome,
             perfil: usuario.perfil,
-            idSalao: usuario.idSalao || null // salva o salão do dono, se houver
+            idSalao: usuario.idSalao || null
         }
 
         if (usuario.perfil === 'adm') {
@@ -40,18 +37,16 @@ export const fazerLogin = async (req, res) => {
     }
 }
 
-// FAZER logout
 export const fazerLogout = (req, res) => {
     req.session.destroy(() => {
         res.redirect('/login')
     })
 }
 
-// CRIAR o ADM master (usar apenas uma vez acessando /setup)
 export const criarAdm = async (req, res) => {
     try {
         const usuarioAdm = await Usuarios.findOne({ where: { perfil: 'adm' } })
-        if (usuarioAdm) { // se já existir um adm, bloqueia
+        if (usuarioAdm) {
             return res.send('ADM já existe!')
         }
 

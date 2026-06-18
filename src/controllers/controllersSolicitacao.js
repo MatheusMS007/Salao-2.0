@@ -1,6 +1,5 @@
 import Solicitacoes from '../models/modelSolicitacao.js'
 
-// LISTAR todas as solicitações do salão do dono logado
 export const listarSolicitacoes = async (req, res) => {
     const idSalao = req.session.usuario.idSalao
 
@@ -15,7 +14,6 @@ export const listarSolicitacoes = async (req, res) => {
     }
 }
 
-// CONFIRMAR uma solicitação
 export const confirmarSolicitacao = async (req, res) => {
     const { id } = req.params
     const idSalao = req.session.usuario.idSalao
@@ -34,7 +32,6 @@ export const confirmarSolicitacao = async (req, res) => {
     }
 }
 
-// RECUSAR uma solicitação
 export const recusarSolicitacao = async (req, res) => {
     const { id } = req.params
     const idSalao = req.session.usuario.idSalao
