@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 
 // rota principal - redireciona para o login
 app.get('/', (req, res) => {
-    res.redirect('/login')
+    res.redirect('/vitrine')
 })
 
 app.use(routerAuth)

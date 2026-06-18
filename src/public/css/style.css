@@ -232,6 +232,23 @@ tr:hover {
 }
 
 
+.btn-parceiro {
+  display: inline-block;
+  background: transparent;
+  color: #c2185b;
+  border: 1px solid #c2185b;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.btn-parceiro:hover {
+  background: #c2185b;
+  color: white;
+}
+
 /* Vitrine de salões */
 .vitrine-cards {
   display: grid;
